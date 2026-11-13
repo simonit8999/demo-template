@@ -1,15 +1,18 @@
 {
-  "business_name": "Здесь могло быть название вашего сервиса",
-  "logo_text": "ВАШ ЛОГОТИП",
-  "accent_color": "#E5E5E5",
-  "telegram_username": "username",
+  "business_name": "Ваша Студия",
+  "logo_text": "ВАШ БРЕНД",
+  "accent_color": "#C5F015",
+  "telegram_username": "your_telegram",
   "phone": "+7 (999) 123-45-67",
   "address": "г. Ваш город, ул. Ваша, д. 1",
   "hero_image": "/images/demo/hero.jpg",
-  "hero_title": "Здесь мог быть ваш заголовок",
-  "hero_subtitle": "Здесь могло быть ваше описание услуг.",
+  "hero_title": "Здесь могло быть название вашего сервиса",
+  "hero_subtitle": "Краткое описание услуг. Премиальный уход за вашим автомобилем.",
+  "isDemo": true,
   "services": [
-    { "id": "1", "name": "Здесь могла быть ваша услуга", "price": 0, "duration": "1 час", "image": "/images/demo/srv1.jpg" }
+    { "id": "1", "name": "Комплексная мойка", "price": 1500, "duration": "1 час", "image": "/images/demo/srv1.jpg" },
+    { "id": "2", "name": "Химчистка салона", "price": 4500, "duration": "3 часа", "image": "/images/demo/srv2.jpg" },
+    { "id": "3", "name": "Полировка кузова", "price": 8000, "duration": "4 часа", "image": "/images/demo/srv3.jpg" }
   ],
-  "working_hours": { "start": "10:00", "end": "20:00", "slot_minutes": 60 }
+  "working_hours": { "start": "09:00", "end": "21:00", "slot_minutes": 60 }
 }
