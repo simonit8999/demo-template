@@ -4,19 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
     <meta name="theme-color" content="#050505" />
+    
+    <!-- Безопасность -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+    <!-- PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Онлайн-запись" />
-    
     <link rel="icon" type="image/png" sizes="192x192" href="./images/demo/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="./images/demo/icon-512.png" />
     <link rel="apple-touch-icon" href="./images/demo/icon-192.png" />
-    
     <link rel="manifest" href="./manifest.json" />
     
+    <!-- Шрифты (пока оставляем Google, но добавим preconnect для скорости) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    
+    <!-- Дефолтные OG-теги (перезапишутся скриптом) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Онлайн-запись" />
+    <meta property="og:description" content="Быстрая запись на услуги" />
+    <meta property="og:image" content="./images/demo/hero.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
     <title>Онлайн-запись</title>
   </head>
   <body>
