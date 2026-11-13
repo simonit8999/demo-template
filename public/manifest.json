@@ -9,7 +9,27 @@
   "background_color": "#050505",
   "theme_color": "#050505",
   "icons": [
-    { "src": "./images/demo/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./images/demo/icon-192.png", "sizes": "192x192", "type"{
+  "id": "/",
+  "name": "Онлайн-запись",
+  "short_name": "Запись",
+  "description": "Быстрая онлайн-запись",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "lang": "ru",
+  "dir": "ltr",
+  "categories": ["business", "lifestyle"],
+  "icons": [
+    { "src": "./images/demo/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./images/demo/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./images/demo/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "./images/demo/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}: "image/png", "purpose": "any maskable" },
     { "src": "./images/demo/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
