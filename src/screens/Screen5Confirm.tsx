@@ -1,15 +1,11 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Send, Sparkles } from 'lucide-react'
+import { Send, Sparkles, Copy, Check } from 'lucide-react'
 import type { AppConfig, BookingData } from '../types'
 
-interface Props {
-  config: AppConfig
-  data: BookingData
-}
-
+interface Props { config: AppConfig; data: BookingData }
 const fmt = (n: number) => new Intl.NumberFormat('ru-RU').format(n) + ' ₽'
 const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-
 function fmtDateLong(d: string | null) {
   if (!d) return '—'
   const dt = new Date(d)
@@ -18,54 +14,46 @@ function fmtDateLong(d: string | null) {
 }
 
 export default function Screen5Confirm({ config, data }: Props) {
+  const [copied, setCopied] = useState(false)
   const total = data.service?.price ?? 0
+
+  const getMessageText = () => {
+    const lines = [
+      `🚗 Новая заявка — ${config.business_name}`, ``,
+      `Услуга: ${data.service?.name}`, `Авто: ${data.carModel}${data.plate ? ` (${data.plate})` : ''}`,
+      `Дата: ${fmtDateLong(data.date)}`, `Время: ${data.time}`, `Имя: ${data.name}`, `Телефон: ${data.phone}`,
+      data.comment ? `Комментарий: ${data.comment}` : '', ``, `Итого: ${fmt(total)}`,
+    ].filter(Boolean).join('\n')
+    return lines
+  }
 
   const handleSend = () => {
     if (!data.service) return
-    const lines = [
-      `🚗 Новая заявка — ${config.business_name}`,
-      ``,
-      `Услуга: ${data.service.name}`,
-      `Авто: ${data.carModel}${data.plate ? ` (${data.plate})` : ''}`,
-      `Дата: ${fmtDateLong(data.date)}`,
-      `Время: ${data.time}`,
-      `Имя: ${data.name}`,
-      `Телефон: ${data.phone}`,
-      data.comment ? `Комментарий: ${data.comment}` : '',
-      ``,
-      `Итого: ${fmt(total)}`,
-    ].filter(Boolean).join('\n')
-
-    const url = `https://t.me/${config.telegram_username}?text=${encodeURIComponent(lines)}`
+    const text = getMessageText()
+    const url = `https://t.me/${config.telegram_username}?text=${encodeURIComponent(text)}`
+    if (navigator.vibrate) navigator.vibrate(50)
     window.open(url, '_blank', 'noopener,noreferrer')
   }
 
+  const handleCopy = () => {
+    const text = getMessageText()
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    if (navigator.vibrate) navigator.vibrate([50, 50, 50])
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
-    /* Главный контейнер: фиксируем высоту экрана */
     <div className="flex flex-col h-full bg-ink overflow-hidden">
-      
-      {/* Шапка (не скроллится) */}
       <div className="pt-2 pb-5 px-5 shrink-0">
-        <h1 className="font-display font-black text-[28px] leading-tight tracking-tight uppercase">
-          Всё верно?
-        </h1>
+        <h1 className="font-display font-black text-[28px] leading-tight tracking-tight uppercase">Всё верно?</h1>
         <p className="mt-1.5 text-zincsoft text-sm">Проверьте детали перед отправкой</p>
       </div>
-
-      {/* Скроллируемая карточка с данными */}
       <div className="flex-1 overflow-y-auto px-5 pb-4">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          className="relative rounded-3xl p-6 border border-white/10 bg-glass backdrop-blur-xl overflow-hidden"
-        >
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="relative rounded-3xl p-6 border border-white/10 bg-glass backdrop-blur-xl overflow-hidden">
           <div className="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-accent/20 blur-3xl pointer-events-none" />
           <div className="relative">
-            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-accent font-semibold">
-              <Sparkles className="w-3.5 h-3.5" /> Ваша заявка
-            </div>
-
+            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-accent font-semibold"><Sparkles className="w-3.5 h-3.5" /> Ваша заявка</div>
             <Row label="Услуга" value={data.service?.name ?? '—'} />
             <Row label="Авто" value={`${data.carModel}${data.plate ? ` · ${data.plate}` : ''}`} />
             <Row label="Дата" value={fmtDateLong(data.date)} />
@@ -73,7 +61,6 @@ export default function Screen5Confirm({ config, data }: Props) {
             <Row label="Имя" value={data.name || '—'} />
             <Row label="Телефон" value={data.phone || '—'} />
             {data.comment && <Row label="Комментарий" value={data.comment} />}
-
             <div className="mt-5 pt-5 border-t border-white/10">
               <div className="text-[11px] uppercase tracking-[0.18em] text-zincsoft font-medium mb-1">Итого</div>
               <div className="font-display font-black text-4xl tracking-tight">{fmt(total)}</div>
@@ -81,26 +68,30 @@ export default function Screen5Confirm({ config, data }: Props) {
           </div>
         </motion.div>
       </div>
-
-      {/* Кнопка (всегда внизу, не скроллится) */}
       <div className="shrink-0 p-5 pb-safe bg-ink border-t border-white/5">
-        <motion.button
-          type="button"
-          whileTap={{ scale: 0.96 }}
-          onClick={handleSend}
-          className="w-full h-14 rounded-full bg-accent text-ink font-semibold text-[15px] flex items-center justify-center gap-2 shadow-glow active:shadow-glowlg transition-shadow"
-        >
-          <Send className="w-4 h-4" strokeWidth={2.4} />
-          Отправить заявку в Telegram
-        </motion.button>
+        {config.telegram_username ? (
+          <>
+            <motion.button type="button" whileTap={{ scale: 0.96 }} onClick={handleSend} className="w-full h-14 rounded-full bg-accent text-ink font-semibold text-[15px] flex items-center justify-center gap-2 shadow-glow active:shadow-glowlg transition-shadow mb-3">
+              <Send className="w-4 h-4" strokeWidth={2.4} />Отправить заявку в Telegram
+            </motion.button>
+            <button type="button" onClick={handleCopy} className="w-full h-12 rounded-full bg-white/5 text-white font-medium text-[14px] flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
+              {copied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />} 
+              {copied ? 'Текст скопирован!' : 'Скопировать текст заявки'}
+            </button>
+          </>
+        ) : (
+          <motion.button type="button" whileTap={{ scale: 0.96 }} onClick={handleCopy} className="w-full h-14 rounded-full bg-accent text-ink font-semibold text-[15px] flex items-center justify-center gap-2 shadow-glow transition-shadow">
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            {copied ? 'Текст скопирован!' : 'Скопировать заявку'}
+          </motion.button>
+        )}
         <p className="mt-3 text-center text-[11px] text-zincsoft leading-relaxed">
-          Нажимая кнопку, вы перейдёте в Telegram
+          {config.telegram_username ? 'Нажимая кнопку, вы перейдёте в Telegram' : 'Отправьте скопированный текст в WhatsApp или Telegram'}
         </p>
       </div>
     </div>
   )
 }
-
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="mt-4">
