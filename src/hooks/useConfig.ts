@@ -8,17 +8,17 @@ export function useConfig() {
   useEffect(() => {
     const clientName = import.meta.env.VITE_CLIENT || 'demo'
     
-    // Используем force-cache для скорости при повторном заходе
     fetch(`/clients/${clientName}.json`, { cache: 'force-cache' }) 
       .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json() })
       .then((data: AppConfig) => {
-        // ВАЛИДАЦИЯ ТЕЛЕГРАМА (защита от подмены)
         if (data.telegram_username) {
           const isValid = /^[a-zA-Z0-9_]{5,32}$/.test(data.telegram_username)
-          if (!isValid) data.telegram_username = '' // Если ник битый - отключаем
+          if (!isValid) data.telegram_username = '' 
         }
 
         setConfig(data)
+        
+        // Цвета
         const rgb = hexToRgb(data.accent_color)
         if (rgb) document.documentElement.style.setProperty('--accent', `${rgb.r} ${rgb.g} ${rgb.b}`)
         
@@ -26,7 +26,23 @@ export function useConfig() {
         if (!metaTheme) { metaTheme = document.createElement('meta'); metaTheme.setAttribute('name', 'theme-color'); document.head.appendChild(metaTheme) }
         metaTheme.setAttribute('content', data.accent_color)
         
+        // Заголовок
         document.title = `${data.business_name} — Онлайн-запись`
+
+        // ДИНАМИЧЕСКИЕ OG-ТЕГИ (для красивых ссылок в Telegram)
+        const setMeta = (property: string, content: string) => {
+          let el = document.querySelector(`meta[property="${property}"]`)
+          if (!el) { el = document.createElement('meta'); el.setAttribute('property', property); document.head.appendChild(el) }
+          el.setAttribute('content', content)
+        }
+        
+        setMeta('og:title', `${data.business_name} — Онлайн-запись`)
+        setMeta('og:description', data.hero_subtitle)
+        // Абсолютный путь для картинки (Telegram не понимает относительные пути)
+        const baseUrl = window.location.origin + window.location.pathname
+        setMeta('og:image', baseUrl + data.hero_image.replace(/^\//, ''))
+        setMeta('og:url', baseUrl)
+        
       })
       .catch((e) => setError(e.message))
   }, [])
