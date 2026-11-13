@@ -61,6 +61,14 @@ export default function Screen1Hero({ config, onStart }: Props) {
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
         </motion.button>
 
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5 }} className="flex items-center justify-center gap-2 mt-6 mb-2">
+  <div className="flex -space-x-2">
+    <div className="w-6 h-6 rounded-full bg-white/20 border border-ink" />
+    <div className="w-6 h-6 rounded-full bg-white/30 border border-ink" />
+    <div className="w-6 h-6 rounded-full bg-white/40 border border-ink" />
+  </div>
+  <span className="text-[11px] text-zincsoft">На этой неделе уже <span className="text-white font-semibold">14 записей</span></span>
+</motion.div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.55 }} className="mt-6 flex flex-col items-center gap-2.5 text-[12px] text-zincsoft">
           <div className="flex items-center justify-center gap-4">
             <a href={`tel:${config.phone.replace(/[^+\d]/g, '')}`} className="flex items-center gap-1.5 hover:text-white transition-colors">
