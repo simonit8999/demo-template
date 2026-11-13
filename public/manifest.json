@@ -1,8 +1,7 @@
 {
-  "id": "blaqcar-v2",
-  "name": "BLAQCAR Detailing",
-  "short_name": "BLAQCAR",
-  "description": "Онлайн-запись в детейлинг-студию",
+  "name": "Онлайн-запись",
+  "short_name": "Запись",
+  "description": "Быстрая онлайн-запись",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -10,17 +9,7 @@
   "background_color": "#050505",
   "theme_color": "#050505",
   "icons": [
-    {
-      "src": "./images/blaqcar/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./images/blaqcar/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
+    { "src": "./images/demo/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./images/demo/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
   ]
 }
