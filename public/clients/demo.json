@@ -1,0 +1,15 @@
+{
+  "business_name": "Здесь могло быть название вашего сервиса",
+  "logo_text": "ВАШ ЛОГОТИП",
+  "accent_color": "#E5E5E5",
+  "telegram_username": "username",
+  "phone": "+7 (999) 123-45-67",
+  "address": "г. Ваш город, ул. Ваша, д. 1",
+  "hero_image": "/images/demo/hero.jpg",
+  "hero_title": "Здесь мог быть ваш заголовок",
+  "hero_subtitle": "Здесь могло быть ваше описание услуг.",
+  "services": [
+    { "id": "1", "name": "Здесь могла быть ваша услуга", "price": 0, "duration": "1 час", "image": "/images/demo/srv1.jpg" }
+  ],
+  "working_hours": { "start": "10:00", "end": "20:00", "slot_minutes": 60 }
+}
