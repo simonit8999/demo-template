@@ -16,9 +16,8 @@ export default function Screen2Service({ config, selected, onSelect, onNext }: P
 
   return (
     <div className="flex flex-col h-full overflow-hidden relative bg-ink">
-      {/* Красивый фон с машиной */}
       <div className="absolute inset-0 z-0">
-        <img src={bgImage} alt="" className="w-full h-full object-cover opacity-15" />
+        <img src={bgImage} alt="" className="w-full h-full object-cover opacity-15" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/95 to-ink" />
       </div>
 
@@ -35,7 +34,7 @@ export default function Screen2Service({ config, selected, onSelect, onNext }: P
               return (
                 <button type="button" key={s.id} onClick={() => onSelect(s)} className="relative overflow-hidden rounded-2xl border text-left cursor-pointer bg-ink/40 transition-colors duration-200" style={{ minHeight: 120, borderColor: active ? 'var(--accent)' : 'rgba(255,255,255,0.1)', boxShadow: active ? '0 0 20px rgba(229,229,229,0.2)' : 'none' }}>
                   <div className="absolute inset-0">
-                    <img src={s.image} alt="" className="w-full h-full object-cover opacity-50" style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }} draggable={false} loading="eager" />
+                    <img src={s.image} alt="" className="w-full h-full object-cover opacity-50" style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }} draggable={false} loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/20" />
                   </div>
                   <div className="relative p-4 flex flex-col justify-between min-h-[120px] z-10">
