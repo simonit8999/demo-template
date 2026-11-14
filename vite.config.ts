@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   publicDir: 'public',
-  // ВАЖНО: добавляем имя репозитория в base
-  base: '/demo-template/',
+  // Берем базу из переменной окружения, либо оставляем корень
+  base: process.env.VITE_BASE || '/',
   build: { outDir: 'dist', emptyOutDir: true }
 })
